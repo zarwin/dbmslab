@@ -1,0 +1,157 @@
+-- Keywords
+min(),max(),avg(),upper(),ASCII(),
+-- Update Table
+UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+-- Like Clause
+SELECT FROM table_name
+WHERE column LIKE 'XXXX%'
+
+or 
+
+SELECT FROM table_name
+WHERE column LIKE '%XXXX%'
+
+or
+
+SELECT FROM table_name
+WHERE column LIKE 'XXXX_'
+
+or
+
+SELECT FROM table_name
+WHERE column LIKE '_XXXX'
+
+or
+
+SELECT FROM table_name
+WHERE column LIKE '_XXXX_'
+-- Order By Clause
+SELECT column-list 
+FROM table_name 
+[WHERE condition] 
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+-- Group By Clause
+SELECT column1, column2
+FROM table_name
+WHERE [ conditions ]
+GROUP BY column1, column2
+ORDER BY column1, column2
+--Inner Join Operations
+SELECT Staff_ID, Staff_NAME, Staff_AGE, AMOUNT   
+   FROM STAFF s, PAYMENT p  
+   WHERE s.ID =p.STAFF_ID;
+
+SELECT Staff_ID, Staff_NAME, Staff_AGE, AMOUNT
+       FROM STAFF INNER JOIN ON PAYMENT 
+       WHERE STAFF.ID=PAYMENT.STAFF_ID;
+-- Left Outer Join
+SELECT table1.column1, table2.column2....  
+FROM table1   
+LEFTJOIN table2  
+ON table1.column_field = table2.column_field;
+-- Right Outer Join
+SELECT table1.column1, table2.column2.....  
+FROM table1   
+RIGHT JOIN table2  
+ON table1.column_field = table2.column_field;
+-- FULL Outer Join
+SELECT *  
+FROM table1  
+FULL OUTER JOIN table2  
+ON table1.column_name = table2.column_name;
+-- Examples of Nested Queries
+SELECT column_name [, column_name ]
+FROM   table1 [, table2 ]
+WHERE  column_name OPERATOR
+   (SELECT column_name [, column_name ]
+   FROM table1 [, table2 ]
+   [WHERE])
+-- 
+INSERT INTO table_name [ (column1 [, column2 ]) ]
+   SELECT [ *|column1 [, column2 ]
+   FROM table1 [, table2 ]
+   [ WHERE VALUE OPERATOR ]
+--    
+UPDATE table
+SET column_name = new_value
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+-- 
+DELETE FROM TABLE_NAME
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+   FROM TABLE_NAME)
+   [ WHERE) ]
+
+-- PL/SQL
+-- Hello Word
+DECLARE
+text VARCHAR2(25);
+BEGIN
+text:= ‘Hello World’;
+dbms_output.put_line (text);
+END:
+/
+
+-- MINIMUM
+CREATE OR REPLACE PROCEDURE findMin(x in number,y in number,z out number)
+
+is 
+
+begin
+if x<y then
+z:=x;
+else
+z:=y;
+end if;
+end;
+declare 
+a number;
+b number;
+c number;
+begin
+a:=23;
+b:=45;
+findMin(a,b,c);
+dbms_output.put_line('MINIMUM'||c);
+end; 
+
+-- Variables
+
+DECLARE 
+   -- Global variables  
+   num1 number := 95;  
+   num2 number := 85;  
+BEGIN  
+   dbms_output.put_line('Outer Variable num1: ' || num1); 
+   dbms_output.put_line('Outer Variable num2: ' || num2); 
+   DECLARE  
+      -- Local variables 
+      num1 number := 195;  
+      num2 number := 185;  
+   BEGIN  
+      dbms_output.put_line('Inner Variable num1: ' || num1); 
+      dbms_output.put_line('Inner Variable num2: ' || num2); 
+   END;  
+END; 
+/ 
+
+-- Cursor
+DECLARE  
+   total_rows number(2); 
+BEGIN 
+   UPDATE customers 
+   SET salary = salary + 500; 
+   IF sql%notfound THEN 
+      dbms_output.put_line('no customers selected'); 
+   ELSIF sql%found THEN 
+      total_rows := sql%rowcount;
+      dbms_output.put_line( total_rows || ' customers selected '); 
+   END IF;  
+END; 
+/      
+-- 
